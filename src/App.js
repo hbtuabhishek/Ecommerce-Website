@@ -1,16 +1,33 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from "react";
 
-import Header from './components/Layout/Header';
-import Product from './components/Products/Product';
+import { Container } from "react-bootstrap";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Store from "./pages/Store";
+import About from "./pages/About";
+import Navbar from "./components/Navbar";
+import { ShoppongCartProvider } from "./context/ShoppingCartContext";
+import Cart from "./pages/Cart";
 
 const App = () => {
+  const [cart, setcart] = useState([]);
   return (
-    <div className="App">
-<Header/>
-<Product/>
-</div>
+    <ShoppongCartProvider>
+      <Navbar />
+      <Container className="mb-4">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/store" element={<Store cart={cart} setcart={setcart} />}>
+            
+          </Route>
+          <Route path="/about" element={<About />} />
+          <Route path="/cart" element={ <Cart cart={cart} setcart={setcart} />}>
+           
+          </Route>
+        </Routes>
+      </Container>
+    </ShoppongCartProvider>
   );
-}
+};
 
 export default App;
